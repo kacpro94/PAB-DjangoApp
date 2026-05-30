@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Brak produktów na magazynie</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 40px;">
+
+    <div style="border: 2px solid #dc3545; background-color: #f8d7da; color: #721c24; padding: 20px; border-radius: 5px;">
+        <h1>❌ Nie można zrealizować zamówienia</h1>
+        <p>Operacja została przerwana (cofnięta w bazie danych), ponieważ zabrakło towaru na magazynie.</p>
+    </div>
+
+    <h2>Szczegóły problemu:</h2>
+    <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; min-width: 400px;">
+        <tr style="background-color: #f2f2f2;">
+            <th>Nazwa parametru</th>
+            <th>Wartość</th>
+        </tr>
+        <tr>
+            <td><strong>Nazwa produktu:</strong></td>
+            <td>{{ product.name }}</td>
+        </tr>
+        <tr>
+            <td><strong>Chciałeś zamówić:</strong></td>
+            <td>{{ requested_quantity }} szt.</td>
+        </tr>
+        <tr style="color: #dc3545; background-color: #fff3f3;">
+            <td><strong>🚨 BRAKUJE:</strong></td>
+            <td><strong>{{ missing_quantity }} szt.</strong></td>
+        </tr>
+    </table>
+
+    <hr style="margin-top: 30px;">
+    <p>Zmniejsz ilość w formularzu i spróbuj ponownie.</p>
+    <a href="{% url 'shop:order_product' product.id %}" style="text-decoration: none; color: #007bff;">
+        ⬅ Wróć i popraw zamówienie
+    </a>
+
+</body>
+</html>

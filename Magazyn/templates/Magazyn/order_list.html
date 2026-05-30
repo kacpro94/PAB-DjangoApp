@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Historia Zamówień</title>
+</head>
+
+<nav style="background-color: #333; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
+    <a href="{% url 'shop:stock_list' %}" style="color: white; margin-right: 15px; text-decoration: none;">📋 Stany Magazynowe</a>
+    <a href="{% url 'shop:order_list' %}" style="color: white; text-decoration: none;">📦 Historia Zamówień</a>
+</nav>
+
+
+<body style="font-family: Arial, sans-serif; margin: 40px;">
+
+    <h1>📦 Rejestr i Historia Zamówień</h1>
+    <p>Poniżej znajduje się lista wszystkich transakcji zarejestrowanych w systemie.</p>
+
+    <table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 900px;">
+        <tr style="background-color: #f2f2f2; text-align: left;">
+            <th>ID zamówienia</th>
+            <th>Data i godzina</th>
+            <th>Produkt</th>
+            <th>Zamówiona ilość</th>
+            <th>Status</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>#{{ order.id }}</td>
+            <td>{{ order.created_at|date:"d.m.Y H:i:s" }}</td>
+            <td><strong>{{ order.product.name }}</strong></td>
+            <td>{{ order.ordered_quantity }} szt.</td>
+            <td>
+                {% if order.status == 'COMPLETED' %}
+                    <span style="background-color: #d4edda; color: #155724; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+                        Zrealizowane
+                    </span>
+                {% else %}
+                    <span style="background-color: #f8d7da; color: #721c24; padding: 4px 8px; border-radius: 4px;">
+                        {{ order.status }}
+                    </span>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" style="text-align: center; color: gray;">Brak złożonych zamówień w systemie.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p style="margin-top: 30px;">
+        <a href="{% url 'shop:stock_list' %}" style="text-decoration: none; color: #007bff; font-weight: bold;">
+            ⬅ Wróć do podglądu stanów magazynowych
+        </a>
+    </p>
+
+</body>
+</html>

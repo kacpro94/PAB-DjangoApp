@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Stan Magazynowy</title>
+</head>
+
+
+<nav style="background-color: #333; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
+    <a href="{% url 'shop:stock_list' %}" style="color: white; margin-right: 15px; text-decoration: none;">📋 Stany Magazynowe</a>
+    <a href="{% url 'shop:order_list' %}" style="color: white; text-decoration: none;">📦 Historia Zamówień</a>
+</nav>
+
+<body style="font-family: Arial, sans-serif; margin: 40px;">
+
+    <h1>📋 Aktualny Stan Magazynowy</h1>
+    <p>Poniżej znajduje się lista wszystkich produktów zarejestrowanych w systemie wraz z dostępną ilością.</p>
+
+    <table border="1" cellpadding="12" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 800px;">
+        <tr style="background-color: #f2f2f2; text-align: left;">
+            <th>ID</th>
+            <th>Nazwa produktu</th>
+            <th>Cena</th>
+            <th>Dostępna ilość (Magazyn)</th>
+            <th>Akcja</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td><strong>{{ product.name }}</strong></td>
+            <td>{{ product.price }} zł</td>
+            <td>
+                {% if product.stock %}
+                    {% if product.stock.quantity == 0 %}
+                        <span style="color: red; font-weight: bold;">Brak towaru (0 szt.)</span>
+                    {% else %}
+                        {{ product.stock.quantity }} szt.
+                    {% endif %}
+                {% else %}
+                    <span style="color: gray;">Nieokreślony (brak tabeli Stock)</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'shop:order_product' product.id %}" style="color: #007bff; text-decoration: none; font-weight: bold;">
+                    Zamów 🛒
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" style="text-align: center; color: gray;">Brak produktów w bazie danych. Dodaj je w panelu admina!</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p style="margin-top: 20px;">
+        <a href="http://127.0.0.1:8000/admin/" target="_blank" style="color: #555;">⚙ Przejdź do panelu admina, aby edytować stany</a>
+    </p>
+
+</body>
+</html>

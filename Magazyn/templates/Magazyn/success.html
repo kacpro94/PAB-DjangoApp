@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zamówienie złożone!</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 40px;">
+
+    <div style="border: 2px solid #28a745; background-color: #d4edda; color: #155724; padding: 20px; border-radius: 5px;">
+        <h1>🎉 Sukces! Zamówienie zostało zrealizowane.</h1>
+        <p>Twoja transakcja przebiegła pomyślnie, a stan magazynowy został zaktualizowany automatycznie.</p>
+    </div>
+
+    <h2>Podsumowanie zamówienia:</h2>
+    <ul>
+        <li><strong>Numer zamówienia (ID):</strong> #{{ order.id }}</li>
+        <li><strong>Produkt:</strong> {{ order.product.name }}</li>
+        <li><strong>Zamówiona ilość:</strong> {{ order.ordered_quantity }} szt.</li>
+        <li><strong>Data zamówienia:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</li>
+    </ul>
+
+    <hr style="margin-top: 30px;">
+    <a href="{% url 'shop:order_product' order.product.id %}" style="text-decoration: none; color: #007bff;">
+        ⬅ Wróć do karty produktu
+    </a>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ product.name }}</title>
+</head>
+<body>
+    <h1>Produkt: {{ product.name }}</h1>
+    <p>Cena: {{ product.price }} zł</p>
+    <p>Opis: {{ product.description }}</p>
+    <hr>
+    <h3>Zamów produkt:</h3>
+    
+    <form action="{% url 'shop:order_product' product.id %}" method="post">
+        {% csrf_token %}
+        <label for="quantity">Ilość sztuk:</label>
+        <input type="number" id="quantity" name="quantity" value="1" min="1" required>
+        <button type="submit">Złóż zamówienie</button>
+    </form>
+</body>
+</html>
